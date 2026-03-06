@@ -1,0 +1,11 @@
+/* En styles.css */
+html, 
+body, 
+app-root { /* Añadimos app-root, que es la etiqueta de Angular */
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: block; /* Asegura que la etiqueta de Angular ocupe todo */
+    background-color: #f4ecec; 
+}

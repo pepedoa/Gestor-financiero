@@ -1,0 +1,528 @@
+* {
+  font-family: 'open sans', sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  /* Todos miden exactamente lo que yo diga */
+  margin: 0;
+  /* Quitamos márgenes rebeldes */
+  padding: 0;
+  /* Quitamos rellenos por defecto */
+}
+
+/* 1. Quita los márgenes que trae el navegador por defecto */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  /* 2. Hacemos que el color gris cubra toda la altura de la ventana */
+  min-height: auto;
+  background-color: #f4ecec;
+
+
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  grid-column: 1;
+  /* asegurar que el logo quede en la columna izquierda */
+  justify-self: start;
+  align-self: center;
+}
+
+.logo img {
+  width: 80px;
+  height: 80px;
+
+   @media (max-width: 768px) {
+    width: 50px;
+    height: 50px;
+    /* Reducir tamaño logo en móviles para evitar  */
+  }
+}
+
+.btn-logout {
+  border-radius: 20px;
+  padding: 10px;
+  margin-left: 15px;
+  border: #910a0a 3px solid;
+  transition: all 0.3s ease;
+}
+
+.btn-logout:hover {
+  background-color: #910a0a;
+  color: white;
+  cursor: pointer;
+}
+
+
+.navbar{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-bottom: #910a0a 10px solid;
+  padding: 12px;
+  background-color: white;
+  gap:50px;
+}
+
+.user-info {
+  margin-left: auto;
+}
+
+.btn-logout i{
+  display: none;
+}
+
+//Ocultar todo lo necesario para que se vea la barra de navegacion bien en moviles
+@media (max-width: 600px) {
+  .btn-logout span {
+    display: none; 
+  }
+
+  .btn-logout i{
+    display:inline;
+  }
+
+  .textoBienvenida{
+    display: none;
+  }
+}
+
+.navbar h1 {
+  color: #6f060c;
+  font-family: 'Inter', sans-serif;
+  font-size: 50px;
+  font-weight: 700;
+  
+  @media (max-width: 768px) {
+    font-size: 35px;
+    /* Reducir tamaño en móviles para evitar scroll */
+  }
+}
+
+.main-container {
+  display: flex;
+  flex-wrap: wrap;
+  /* Permite que los hijos bajen si no caben */
+  gap: 20px;
+  /* El "pasillo" entre cajas */
+  padding: 20px;
+  /* El aire respecto al borde del navegador */
+  background-color: #f4ecec;
+  /* Color de fondo suave para que se vean las sombras */
+  min-height: auto;
+  box-sizing: border-box;
+  /* Importante para que el padding no "empuje" el ancho y cree scroll */
+
+}
+
+/* EL FORMULARIO (Estrecho y fijo) */
+.sidebar {
+  flex: 1 1 300px;
+  /* "1": Crece un poco. "300px": Su ancho base. */
+  background: white;
+  padding: 20px;
+
+  padding-bottom: 50px;
+  border-radius: 12px;
+  height: fit-content;
+  /* IMPORTANTE: Para que el fondo blanco no llegue hasta el suelo si el formulario es corto */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* Sombra suave para que "floten" */
+  margin-right: 1px;
+  min-width: 0;
+  /* IMPEDIR QUE CONTENEDOR SUPERE EL ANCHO DE LA PANTALLA */
+
+  @media (min-width: 1024px) {
+    padding: 20px;
+    flex: 1 1 200px;
+    /* "1": Crece un poco. "300px": Su ancho base. */
+  }
+
+}
+
+
+.sidebar input,
+.sidebar select {
+  display: block;
+  /* Obliga a cada uno a estar en su propia línea */
+  width: 100%;
+  /* Hace que rellenen todo el ancho de la caja blanca */
+  padding: 10px;
+  /* Les da grosor para que sea fácil hacer clic */
+  margin: 20px 0;
+  /* Crea espacio arriba y abajo de cada cuadro */
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  /* Suaviza las esquinas de los cuadros */
+  box-shadow: 5px 4px 4px rgba(0, 0, 0, 0.2);
+
+}
+
+.sidebar label {
+  font-weight: bold;
+  /* Hace que el texto (Descripción, Importe...) destaque */
+  display: block;
+  /* El texto también se queda solo en su línea */
+  margin-top: 10px;
+}
+
+.sidebar .botonform {
+  width: 100%;
+  padding: 12px;
+  background-image: linear-gradient(to right, #ad0909, #640a0a);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+}
+
+.sidebar .botonAlertaExito {
+  width: 50%;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+  background-color: #1a6b2d;
+  color: white;
+}
+
+.botonAlertaFallo {
+  width: 50%;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  margin-top: 10px;
+  background-color: #86262f;
+}
+
+.sidebar button:hover {
+  filter: brightness(85%);
+  /* Lo oscurece un 15% */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  /* Le da una sombrita abajo */
+}
+
+
+//alertas formulario
+.custom-alerte {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #28a745;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  animation: slideIn 0.5s ease-out;
+}
+
+.custom-alertf {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #dc3545;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  animation: slideIn 0.5s ease-out;
+}
+
+.custom-alerte.saliendo {
+  animation: slideOut 0.5s ease-in forwards;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+
+/*TARJETAS  */
+h3 {
+  /* Quita la negrita que el navegador pone por defecto */
+  font-weight: normal;
+}
+
+.cuentas {
+  font-weight: bold;
+  font-size: 30px;
+}
+
+.content {
+  flex: 3 1 300px;
+  /* "3": Crece el triple que el formulario. "600px": Necesita más espacio base. */
+  display: flex;
+  flex-direction: column;
+  /* Para que las tarjetas se pongan ARRIBA de la tabla */
+  gap: 20px;
+  min-width: 0;
+  /* CLAVE: Permite que el contenido se encoja correctamente y la tabla use su overflow */
+}
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+
+}
+
+/* Cuando la pantalla sea menor a 768px (móviles y tablets verticales) */
+@media (max-width: 768px) {
+
+  .cards-container {
+    flex-direction: column;
+    /* Fuerza a que vayan una debajo de otra */
+    padding: 1px;
+    /* Un poco de respiro a los lados */
+  }
+
+  .card {
+    width: 100%;
+    /* Que ocupe todo el ancho disponible */
+    min-width: 0;
+    /* IMPORTANTE: Quitamos el mínimo para que no empuje la pantalla */
+    flex: 1 1 auto;
+    /* Reseteamos el flex para que no intente crecer a los lados */
+    box-sizing: border-box;
+    /* Para que el padding no sume ancho extra */
+  }
+
+  .cuentas {
+    font-size: 24px;
+  }
+}
+
+.card {
+  flex: 1;
+  /* hace que midan lo mismo */
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  /* Centra el título (Ingresos) y el número (0.00€) */
+  color: white;
+  /* Texto en blanco para que resalte */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* Sombra suave para que "floten" */
+  font-size: 20px;
+
+
+  @media (min-width: 1024px) {
+    padding: 30px 10px;
+  }
+}
+
+/* Colores de "semáforo" para identificar rápido */
+.ingresos {
+  background-color: #27ae60;
+}
+
+/* Verde */
+.gastos {
+  background-color: #e74c3c;
+}
+
+/* Rojo */
+.balance {
+  background-color: #3498db;
+}
+
+/* Azul */
+
+
+//Tabla
+.table-section {
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  /* La sombra que hablamos */
+  max-height: 400px;
+  /* altura: 400px, 500px... */
+  overflow-y: auto;
+  /* Activa el scroll vertical solo si es necesario */
+  overflow-x: auto;
+  /* Por si la tabla es muy ancha en móviles */
+  width: 100%;
+  /* Asegura que no sea más grande que su padre */
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.modern-table {
+  width: 100%;
+  border-collapse: collapse;
+  /* <--- ESTO quita el efecto de Excel antiguo */
+  margin-top: 20px;
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  /* Para que las esquinas de la tabla sigan el redondeado */
+
+}
+
+
+
+/* Estilo para las celdas (tanto cabecera como cuerpo) */
+.modern-table th,
+.modern-table td {
+  padding: 16px 12px;
+  text-align: left;
+  border-bottom: 1px solid #edf2f7;
+}
+
+
+
+.modern-table th {
+  background-color: #f8fafc;
+  /* Un gris casi blanco muy elegante */
+  color: #64748b;
+  /* Un gris azulado para el texto */
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  /* Títulos en mayúsculas */
+  letter-spacing: 0.05em;
+  /* Un poco de espacio entre letras */
+}
+
+/* Efecto al pasar el ratón (Hover) */
+.modern-table tbody tr:hover {
+  background-color: #e2e6eb;
+  transition: background-color 0.2s ease;
+}
+
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  /* Forma de pastilla */
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: capitalize; //pone la primera letra mayuscula
+}
+
+/* Recuerda las clases que ya creamos antes */
+.bg-ingreso {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+/* Verde suave */
+.bg-gasto {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+/* Rojo suave */
+
+.texto-ingreso {
+  color: #166534;
+  font-weight: bold;
+}
+
+.texto-gasto {
+  color: #991b1b;
+  font-weight: bold;
+}
+
+.modern-table td:nth-child(2) {
+  //segunda columna
+  font-family: 'Courier New', Courier, monospace;
+  /* Fuente tipo banco */
+}
+
+//botones tabla
+/* Contenedor para alinear los botones */
+.acciones-flex {
+  display: flex;
+  gap: 10px;
+  justify-content: left;
+}
+
+/* Estilo base para ambos botones */
+.btn-editar,
+.btn-borrar {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  /* Los hace redondos */
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+/* Colores específicos para Editar (Azul) */
+.btn-editar {
+  color: #3498db;
+}
+
+.btn-editar:hover {
+  background-color: rgba(52, 152, 219, 0.1);
+  /* Fondo azul clarito al pasar el ratón */
+  transform: scale(1.6);
+  /* Se agranda un pelín */
+}
+
+/* Colores específicos para Borrar (Rojo) */
+.btn-borrar {
+  color: #e74c3c;
+}
+
+.btn-borrar:hover {
+  background-color: rgba(231, 76, 60, 0.1);
+  /* Fondo rojo clarito */
+  transform: scale(1.6);
+}
+
+//letra alerta borrar
+.mi-clase-fuente {
+  font-family: 'open sans', sans-serif;
+}
+
+//footer
+.footer {
+  text-align: center;
+  background-color: #f4ecec;
+  color: rgba(73, 69, 69, 0.479);
+  padding: 20px;
+
+}

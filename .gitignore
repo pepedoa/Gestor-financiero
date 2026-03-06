@@ -1,0 +1,46 @@
+# --- BACKEND (api-finanzas) ---
+api-finanzas/conexion.php
+
+
+# --- FRONTEND (frontend-finanzas) ---
+# Compiled output
+frontend-finanzas/dist/
+frontend-finanzas/tmp/
+frontend-finanzas/out-tsc/
+frontend-finanzas/bazel-out/
+
+# Node
+frontend-finanzas/node_modules/
+frontend-finanzas/npm-debug.log
+frontend-finanzas/yarn-error.log
+
+# IDEs and editors
+frontend-finanzas/.idea/
+frontend-finanzas/.project
+frontend-finanzas/.classpath
+frontend-finanzas/.c9/
+frontend-finanzas/*.launch
+frontend-finanzas/.settings/
+frontend-finanzas/*.sublime-workspace
+
+# Visual Studio Code
+frontend-finanzas/.vscode/*
+!frontend-finanzas/.vscode/settings.json
+!frontend-finanzas/.vscode/tasks.json
+!frontend-finanzas/.vscode/launch.json
+!frontend-finanzas/.vscode/extensions.json
+frontend-finanzas/.history/*
+
+# Miscellaneous
+frontend-finanzas/.angular/cache
+frontend-finanzas/.sass-cache/
+frontend-finanzas/connect.lock
+frontend-finanzas/coverage
+frontend-finanzas/libpeerconnection.log
+frontend-finanzas/testem.log
+frontend-finanzas/typings
+frontend-finanzas/__screenshots__/
+
+# System files
+.DS_Store
+Thumbs.db

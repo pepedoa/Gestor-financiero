@@ -1,0 +1,129 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<nav class="navbar">
+  <a class="logo">
+      <img src="/logo1.png" alt="Logo">
+      <h1>SmartWallet</h1>
+  </a>
+
+  <div class="user-info">
+    <span class="textoBienvenida">Bienvenido</span>
+    <button class="btn-logout"><i class="fas fa-sign-out-alt"></i><span>Cerrar Sesión</span></button>
+  </div>
+</nav>
+
+<div class="main-container">
+  <aside class="sidebar">
+    <form class="formulario-gastos" (ngSubmit)="guardar()">
+      <h2 id="miFormulario">{{nuevoGasto.id ? 'Editar Movimiento' : 'Registrar Movimiento'}}</h2>
+
+      <label>Descripción:</label>
+      <input type="text" [(ngModel)]="nuevoGasto.descripcion" name="descripcion" placeholder="">
+
+      <label>Importe (€):</label>
+      <input type="number" [(ngModel)]="nuevoGasto.importe" name="importe">
+
+      <label>Fecha Movimiento:</label>
+      <input type="date" [(ngModel)]="nuevoGasto.fecha" name="fecha">
+
+      <label>ID Categoría:</label>
+      <select [(ngModel)]="nuevoGasto.categoria_id" name="categoria_id">
+        <option [ngValue]="null" disabled>-- Selecciona una Categoría --</option>
+        <option *ngFor="let cat of listaCategorias" [value]="cat.id">
+          {{ cat.tipo_de_movimiento }}
+        </option>
+      </select>
+
+      <label>ID Usuario:</label>
+      <select [(ngModel)]="nuevoGasto.usuario_id" name="usuario_id">
+        <option [ngValue]="null" disabled>-- Selecciona un Usuario --</option>
+        <option *ngFor="let us of listaUsuarios" [value]="us.id">
+          {{ us.nombre }}
+        </option>
+      </select>
+
+      <button type="submit" class="botonform">{{nuevoGasto.id ? 'Actualizar Gasto' : 'Guardar Gasto'}}</button>
+    </form>
+     <div *ngIf="Exitoso" class="custom-alerte" [class.saliendo]="cerrandoAlerta">
+        {{mensajeAlerta}}
+        <button class="botonAlertaExito" (click)="Exitoso = false">Cerrar</button>
+      </div>
+      <div *ngIf="Fallido" class="custom-alertf" [class.saliendo]="cerrandoAlerta">
+        {{mensajeAlerta}}
+        <button class="botonAlertaFallo" (click)="Fallido = false">Cerrar</button>
+      </div>
+  </aside>
+
+  <main class="content">
+
+    <div class="cards-container">
+      <div class="card ingresos">
+        <h3>Total Ingresos</h3>
+        <p class ="cuentas">{{totalIngresos}} €</p>
+      </div>
+      <div class="card gastos">
+        <h3>Total Gastos</h3>
+        <p class ="cuentas">{{totalGastos}} €</p>
+      </div>
+      <div class="card balance">
+        <h3>Balance Actual</h3>
+        <p class ="cuentas">{{totalBalance}} €</p>
+      </div>
+    </div>
+
+    <h1>Transacciones</h1>
+
+    <div class="table-section">
+      <table class="modern-table">
+        <thead>
+          <tr>
+            <th>Descripción</th>
+            <th>Importe</th>
+            <th>Categoría</th>
+            <th>Fecha</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+      <tbody>
+          @for (gasto of misGastos; track gasto.id) { <!--trackBy para evitar que se mueva la tabla al escribir se fija en el id  -->        
+          <tr>
+            <td> {{ gasto.descripcion }} </td>
+            <td [class.texto-ingreso]="gasto.tipo_de_movimiento === 'ingreso'" 
+                [class.texto-gasto]="gasto.tipo_de_movimiento === 'gasto'">
+              {{ gasto.importe | number:'1.2-2' }} €
+            </td>
+            <td> 
+              <span class="badge" [ngClass]="gasto.tipo_de_movimiento === 'ingreso' ? 'bg-ingreso' : 'bg-gasto'">
+                {{ gasto.tipo_de_movimiento }}
+              </span>
+            </td>
+            <td> {{ gasto.fecha }} </td>
+            <td>
+              <div class="acciones-flex">
+                <button (click)="prepararEdicion(gasto)" class="btn-editar" title="Editar">
+                  <i class="bi bi-pencil-fill"></i>
+                </button>
+                
+                <button (click)="borrarGasto(gasto.id)" class="btn-borrar" title="Eliminar">
+                  <i class="bi bi-trash-fill"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+</div>
+
+
+    <footer class="footer">
+        <p>&copy;{{ currentYear }} José Doménech Alemany. Todos los derechos reservados.</p>
+       
+
+    </footer>   
+
+
