@@ -24,21 +24,27 @@ if($infoToken){
 $json = file_get_contents('php://input');
 $data = json_decode($json);
 
-if ($data && isset($data->id)) {
-    $id = $data->id;
+if ($data && isset($data->ids) && is_array($data->ids)) {
+    $listaParaBorrar = $data->ids;
+
+    // 1. Asegúrate de que son números de verdad recorre el array y lo que hay o lo fuerza a convertirse en entero o lo anula con array map
+    $listaLimpa = array_map('intval', $listaParaBorrar);
+    $idsParaSql = implode(',', $listaLimpa);
+
+    //para poder pasarselo al sql necesito pasar de array a texto y uso el implode
 
     // 1. Preparamos la sentencia asegurando que coincida id y usuario_id
-    $stmt = $conexion->prepare("DELETE FROM transacciones WHERE id = ? AND usuario_id = ?");
+    $stmt = $conexion->prepare("DELETE FROM transacciones WHERE id  IN ($idsParaSql) AND usuario_id = ?");
     
     // 2. Vinculamos el ID (int) y usuario_id (int) -> 'ii'
-    $stmt->bind_param("ii", $id, $user);
+    $stmt->bind_param("i", $user);
 
     // 3. Ejecutamos y respondemos
     if ($stmt->execute()) {
         if ($stmt->affected_rows > 0) {
             echo json_encode(["resultado" => "OK"]);
         } else {
-            echo json_encode(["resultado" => "ERROR", "error" => "El registro no existe o no tienes permisos para borrarlo"]);
+            echo json_encode(["resultado" => "ERROR", "error" => "Los IDS no existeN o no tienes permisos para borrarlos"]);
         }
     } else {
         echo json_encode(["resultado" => "ERROR", "error" => $stmt->error]);
@@ -47,7 +53,7 @@ if ($data && isset($data->id)) {
     // 4. Limpieza de recursos
     $stmt->close();
 } else {
-    echo json_encode(["resultado" => "ERROR", "mensaje" => "ID no recibido"]);
+    echo json_encode(["resultado" => "ERROR", "mensaje" => "IDs no recibidos"]);
 }
 $conexion->close();
 ?>

@@ -4,7 +4,8 @@ import { Observable } from 'rxjs';
 import { Movimiento, Nuevomovimiento} from '../interfaces/Movimientos';
 import { ApiResponse } from '../interfaces/ApiResponse';
 import { Categorias } from '../interfaces/Categorias';
-import { Usuarios } from '../interfaces/Usuarios';
+import { Usuarios, Nuevousuario, loginUsuario } from '../interfaces/Usuarios';
+import { HttpHeaders } from '@angular/common/http';
 
 
 @Injectable({
@@ -20,7 +21,14 @@ export class Api {
 
   //obtener gastos
   getMovimientos(): Observable<Movimiento[]> {
-    return this.http.get<Movimiento[]>(this.url + 'obtener_movimientod.php');
+    const token = sessionStorage.getItem('token');
+  // Creamos el cofre de cabeceras metiendo nuestro pase VIP
+  const cabeceras = new HttpHeaders({
+    'X-Token': token || '' 
+  });
+
+    return this.http.get<Movimiento[]>(this.url + 'obtener_movimientod.php', { headers: cabeceras });
+
   }
 
   getCategorias(): Observable<Categorias[]> {
@@ -32,17 +40,50 @@ export class Api {
   }
 
   insertarGasto(datos: Nuevomovimiento): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(this.url + 'guardar_gasto.php', datos);
+    const token = sessionStorage.getItem('token');
+    // Creamos el cofre de cabeceras metiendo nuestro pase VIP
+    const cabeceras = new HttpHeaders({
+      'X-Token': token || '' 
+    });  
+
+    return this.http.post<ApiResponse>(this.url + 'guardar_gasto.php', datos, { headers: cabeceras });
 
   }
 
   eliminarMovimiento(id: number): Observable<any> {
-    return this.http.post(this.url + 'borrar.php', {id});
+    const token = sessionStorage.getItem('token');
+    const cabeceras = new HttpHeaders({
+      'X-Token': token || '' 
+    });  
+    return this.http.post(this.url + 'borrar.php', {id}, { headers: cabeceras });
+  }
+
+    
+  eliminarMovimientos(ids: number[]): Observable<any> {
+    const token = sessionStorage.getItem('token');
+    const cabeceras = new HttpHeaders({
+      'X-Token': token || '' 
+    });  
+    return this.http.post(this.url + 'borrarMasivo.php', {ids}, { headers: cabeceras });
   }
 
   actualizarGasto(datos: Nuevomovimiento): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(this.url + 'actualizar_gasto.php', datos);
+    const token = sessionStorage.getItem('token');
+    // Creamos el cofre de cabeceras metiendo nuestro pase VIP
+    const cabeceras = new HttpHeaders({
+      'X-Token': token || '' 
+    });  
+    return this.http.post<ApiResponse>(this.url + 'actualizar_gasto.php', datos, { headers: cabeceras });
   }
 
+  insertarUsuario(datos: Nuevousuario): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(this.url + 'registrar.php', datos);
+
+  }
+
+  logearUsuario(datos: loginUsuario): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(this.url + 'login.php', datos);
+
+  }
 
 }

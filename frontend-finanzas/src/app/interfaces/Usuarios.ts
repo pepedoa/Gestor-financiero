@@ -4,3 +4,15 @@ export interface Usuarios {
     email: string;
     password: string;
 }
+
+export interface Nuevousuario {
+  
+    nombre: string; 
+    email: string;
+    password: string;
+}
+
+export interface loginUsuario {
+    nombre: string; 
+    password: string;
+}

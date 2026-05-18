@@ -1,6 +1,23 @@
 # --- BACKEND (api-finanzas) ---
 api-finanzas/conexion.php
 
+# Entornos y Secretos
+.env
+.env.*
+*.local
+
+# Bases de datos
+*.sql
+*.sqlite
+*.sqlite3
+*.db
+
+# Ignorar logs de servidor y archivos temporales
+api-finanzas/*.log
+api-finanzas/*.txt
+api-finanzas/test.php
+api-finanzas/config.php
+
 
 # --- FRONTEND (frontend-finanzas) ---
 # Compiled output
@@ -11,8 +28,9 @@ frontend-finanzas/bazel-out/
 
 # Node
 frontend-finanzas/node_modules/
-frontend-finanzas/npm-debug.log
-frontend-finanzas/yarn-error.log
+frontend-finanzas/npm-debug.log*
+frontend-finanzas/yarn-error.log*
+frontend-finanzas/yarn-debug.log*
 
 # IDEs and editors
 frontend-finanzas/.idea/
@@ -32,15 +50,20 @@ frontend-finanzas/.vscode/*
 frontend-finanzas/.history/*
 
 # Miscellaneous
-frontend-finanzas/.angular/cache
+frontend-finanzas/.angular/
 frontend-finanzas/.sass-cache/
 frontend-finanzas/connect.lock
-frontend-finanzas/coverage
+frontend-finanzas/coverage/
 frontend-finanzas/libpeerconnection.log
 frontend-finanzas/testem.log
-frontend-finanzas/typings
+frontend-finanzas/typings/
 frontend-finanzas/__screenshots__/
 
 # System files
 .DS_Store
 Thumbs.db
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

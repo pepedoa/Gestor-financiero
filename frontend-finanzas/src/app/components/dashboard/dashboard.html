@@ -8,8 +8,8 @@
   </a>
 
   <div class="user-info">
-    <span class="textoBienvenida">Bienvenido</span>
-    <button class="btn-logout"><i class="fas fa-sign-out-alt"></i><span>Cerrar Sesión</span></button>
+    <span class="textoBienvenida">Bienvenid@, {{ nombrePersona }}!</span>
+    <button class="btn-logout" (click)="cerrarSesion()"><i class="fas fa-sign-out-alt"></i><span>Cerrar Sesión</span></button>
   </div>
 </nav>
 
@@ -35,15 +35,10 @@
         </option>
       </select>
 
-      <label>ID Usuario:</label>
-      <select [(ngModel)]="nuevoGasto.usuario_id" name="usuario_id">
-        <option [ngValue]="null" disabled>-- Selecciona un Usuario --</option>
-        <option *ngFor="let us of listaUsuarios" [value]="us.id">
-          {{ us.nombre }}
-        </option>
-      </select>
+     
 
       <button type="submit" class="botonform">{{nuevoGasto.id ? 'Actualizar Gasto' : 'Guardar Gasto'}}</button>
+      <button type="button" class="botonform"  *ngIf="nuevoGasto.id" (click)="resetForm()" >Cancelar y volver a Registrar Movimiento</button>
     </form>
      <div *ngIf="Exitoso" class="custom-alerte" [class.saliendo]="cerrandoAlerta">
         {{mensajeAlerta}}
@@ -54,6 +49,8 @@
         <button class="botonAlertaFallo" (click)="Fallido = false">Cerrar</button>
       </div>
   </aside>
+ 
+  
 
   <main class="content">
 
@@ -72,21 +69,89 @@
       </div>
     </div>
 
-    <h1>Transacciones</h1>
+    <!-- SECCIÓN DEL GRÁFICO (El "Donut") -->
+     @if (misGastos.length > 0) {
+      <h1>Gráficos</h1>
+      <div class="charts-container">
+      
+        <div class="graficos">
+          <h2 class="tituloGrafico">Gastos / Ingresos</h2>
+          <canvas baseChart
+            [data]="datosGrafico"
+            [options]="opcionesGrafico"
+            [type]="'doughnut'"> <!-- doughnut es el término inglés para la típica gráfica de anillo/donut -->
+          </canvas>
+        </div>
+
+        <!-- SECCIÓN DEL GRÁFICO 2 (Desglose de Gastos) -->
+        
+        <div class="graficos">
+          <h2 class="tituloGrafico">Desglose de Gastos</h2>
+          <canvas baseChart
+            [data]="datosGraficoGastos" 
+            [options]="opcionesGraficoGastos"
+            [type]="'pie'"> <!-- Puedes probar a cambiar 'doughnut' por 'pie' para que este sea un gráfico de "Tarta" normal-->
+          </canvas>
+          
+        </div>
+
+        <!-- SECCIÓN DEL GRÁFICO 3 (Desglose de ingresos) -->
+        
+        <div class="graficos">
+          <h2 class="tituloGrafico">Desglose de Ingresos</h2>
+          <canvas baseChart
+            [data]="datosGraficoIngresos" 
+            [options]="opcionesGraficoIngresos"
+            [type]="'pie'"> <!-- Puedes probar a cambiar 'doughnut' por 'pie' para que este sea un gráfico de "Tarta" normal-->
+          </canvas>
+          
+        </div>
+
+
+      </div>
+    
+    } @else {
+      <div class="estado-vacio">
+        <i class="bi bi-bar-chart-fill icono-vacio"></i>
+        <h3>Aún no hay datos para mostrar</h3>
+        <p>Registra tu primer movimiento a la izquierda para ver tus estadísticas y gráficas cobrar vida.</p>
+      </div>
+    }
+
+    
+  <div class="headerTransacciones">
+    <div class="tituloSeccion">
+       <h1>Transacciones</h1>
+    </div>
+
+    <div class="accionesTabla">
+      <div class="grupoFiltro">
+        <input class ="buscador" type="text" [(ngModel)]="nombreFiltrado" name="nombreFiltrado" placeholder="🔍 Buscar por descripción o fecha"> 
+        <!--solo lo muestra si se busca algo gracias al  ngif-->
+        <button [disabled]="!nombreFiltrado || nombreFiltrado.trim().length === 0"  (click)="borrarResultadosFiltrados()" class="botonBorrar">
+          🗑️ borar resultado busqueda 
+        </button>
+      </div>
+    
+      <button class="botonPdf" (click)="descargarPDF()">
+      📄 Descargar en PDF
+      </button>
+    </div> 
+  </div>
 
     <div class="table-section">
       <table class="modern-table">
         <thead>
           <tr>
-            <th>Descripción</th>
-            <th>Importe</th>
-            <th>Categoría</th>
-            <th>Fecha</th>
+            <th class="cabeceraTabla" (click)="ordenarPor('descripcion')">Descripción <span>⇅</span></th>
+            <th class="cabeceraTabla" (click)="ordenarPor('importe')">Importe <span>⇅</span></th>
+            <th class="cabeceraTabla" (click)="ordenarPor('tipo_de_movimiento')">Categoría <span>⇅</span></th>
+            <th class="cabeceraTabla" (click)="ordenarPor('fecha')">Fecha <span>⇅</span></th>
             <th>Acciones</th>
           </tr>
         </thead>
       <tbody>
-          @for (gasto of misGastos; track gasto.id) { <!--trackBy para evitar que se mueva la tabla al escribir se fija en el id  -->        
+          @for (gasto of obtenerMovimientosFiltrados(); track gasto.id) { <!--trackBy para evitar que se mueva la tabla al escribir se fija en el id  -->        
           <tr>
             <td> {{ gasto.descripcion }} </td>
             <td [class.texto-ingreso]="gasto.tipo_de_movimiento === 'ingreso'" 

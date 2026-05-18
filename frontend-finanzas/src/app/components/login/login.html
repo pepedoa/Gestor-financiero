@@ -1,1 +1,67 @@
-<p>login works!</p>
+<main class="contenedor seccion pagina-contacto">
+    <div class="container">
+        
+        @if (!isRegister()) {
+            <div class="form-box">
+                <form (ngSubmit)="logearUsuario()">
+                    <h1>Acceso</h1>
+                    <div class="input-box">
+                        <label for="usuario">Nombre de Usuario:</label>
+                        <input  required name="nombre" [(ngModel)]="UsuarioLogeado.nombre" id="usuario" type="text" placeholder="Escribe tu nombre" />
+                        <i class="bx bxs-user"></i>
+                    </div>
+                    <div class="input-box">
+                        <label for="contraseña">Contraseña:</label>
+                        <input required name="password" [(ngModel)]="UsuarioLogeado.password" id="contraseña" type="password" placeholder="Escribe tu contraseña" />
+                        <i class="bx bxs-lock-alt"></i>
+                    </div>
+                    <button type="submit" class="btn">Acceso</button>
+                    <p class="toggle-text">
+                        ¿No tienes cuenta? <span (click)="toggleForm(true)"><b>Regístrate aquí</b></span>
+                    </p>
+                </form>
+                    <div *ngIf="Exitoso" class="custom-alerte" [class.saliendo]="cerrandoAlerta">
+                        {{mensajeAlerta}}
+                        <button class="botonAlertaExito" (click)="Exitoso = false">Cerrar</button>
+                    </div>
+                    <div *ngIf="Fallido" class="custom-alertf" [class.saliendo]="cerrandoAlerta">
+                        {{mensajeAlerta}}
+                        <button class="botonAlertaFallo" (click)="Fallido = false">Cerrar</button>
+                    </div>
+            </div>
+        }@else{
+            <div class="form-box">
+                <form (ngSubmit)="registrarNuevoUsuario()">
+                    <h1>Registro</h1>
+                    <div class="input-box">
+                        <label for="usuario">Nombre de Usuario:</label>
+                        <input required name="nombre" [(ngModel)]="nuevoUsuario.nombre" id="usuario" type="text" placeholder="Escribe tu usuario" />
+                        <i class="bx bxs-user"></i>
+                    </div>
+                    <div class="input-box">
+                        <label for="email">Email:</label>
+                        <input required name="email" [(ngModel)]="nuevoUsuario.email" id="email" type="email" placeholder="Escribe tu correo electrónico" />
+                        <i class="bx bxs-envelope"></i>
+                    </div>
+                    <div class="input-box">
+                        <label for="contraseña">Contraseña:</label>
+                        <input required name="password" [(ngModel)]="nuevoUsuario.password" id="contraseña" type="password" placeholder="Escribe tu contraseña" />
+                        <i class="bx bxs-lock-alt"></i>
+                    </div>
+                    <button type="submit" class="btn">Registro</button>
+                    <p class="toggle-text">
+                        ¿Ya tienes cuenta? <span (click)="toggleForm(false)"><b>Inicia sesión</b></span>
+                    </p>
+                </form>
+                <div *ngIf="Exitoso" class="custom-alerte" [class.saliendo]="cerrandoAlerta">
+                    {{mensajeAlerta}}
+                    <button class="botonAlertaExito" (click)="Exitoso = false">Cerrar</button>
+                </div>
+                <div *ngIf="Fallido" class="custom-alertf" [class.saliendo]="cerrandoAlerta">
+                    {{mensajeAlerta}}
+                    <button class="botonAlertaFallo" (click)="Fallido = false">Cerrar</button>
+                </div>
+            </div>
+        }
+    </div>
+</main>

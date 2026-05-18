@@ -1,0 +1,175 @@
+* {
+  font-family: 'open sans', sans-serif;
+}
+
+.contenedor.pagina-contacto {
+    /* 1. centramos el formulario*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    /* 3. Ocupar el 100% de la ventana */
+    min-height: 100vh; /* vh = viewport height (altura de la ventana) */
+    width: 100vw;      /* vw = viewport width (ancho de la ventana) */
+    
+    margin: 0;
+    padding: 0;
+     @media (max-width: 768px) {
+        padding: 20px;
+        min-height: 90vh; /* vh = viewport height (altura de la ventana) */
+        width: 90vw;      /* vw = viewport width (ancho de la ventana) */
+    
+ }
+}
+
+.container{
+  background-color: white;
+  padding: 60px;
+  padding-right: 60px;
+  border-radius: 10px;
+  border: solid 4px #910a0a;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+ 
+}
+
+ 
+
+
+.input-box {
+    position: relative; /* <--- Esto permite que el icono se mueva libremente dentro */
+    margin-bottom: 20px; /* <--- Espacio entre un campo y el siguiente */
+    display: flex;
+    flex-direction: column; /* <--- El label arriba y el input abajo */
+}
+
+.input-box label {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 8px; /* <--- Despega el texto de la caja donde se escribe */
+    text-align: left;
+}
+
+.input-box input {
+    width: 100%;
+    padding: 12px;
+    background: #fdfdfd; /* Un blanco casi puro */
+    border: 1px solid #ddd; /* Un borde gris suave */
+    border-radius: 8px; /* Bordes redondeados modernos */
+    outline: none; /* Esto quita el borde azul feo que pone Chrome al pinchar */
+    transition: border-color 0.3s; /* Para que el cambio de color sea suave */
+    box-sizing: border-box; /* <--- ESTO ES LO QUE IGUALA LOS ANCHOS */
+    box-shadow: 0 5px 3px rgba(0, 0, 0, 0.1);
+}
+
+.btn{
+  background-color: #910a0a;
+  color: white;
+  font-weight:bold ;
+  padding: 12px;
+  width: 100%;
+  border:none;
+  border-radius: 10px;
+  box-sizing: border-box; /* <--- ESTO ES LO QUE IGUALA LOS ANCHOS */
+  
+}
+
+.btn:hover{
+   background-color: #6b0a0a;
+    transition: all 0.3s ease;
+}
+
+
+/* El toque pro: Cuando el usuario pincha para escribir */
+.input-box input:focus {
+    border-color: #000000; /* Un naranja o rojizo que combine con tu fondo */
+}
+
+.toggle-text span{
+  cursor: pointer;
+}
+.botonAlertaExito {
+  width: 50%;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+  background-color: #1a6b2d;
+  color: white;
+}
+
+.botonAlertaFallo {
+  width: 50%;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  margin-top: 10px;
+  background-color: #86262f;
+}
+
+.sidebar button:hover {
+  filter: brightness(85%);
+  /* Lo oscurece un 15% */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  /* Le da una sombrita abajo */
+}
+
+
+//alertas formulario
+.custom-alerte {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #28a745;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  animation: slideIn 0.5s ease-out;
+}
+
+.custom-alertf {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #dc3545;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  animation: slideIn 0.5s ease-out;
+}
+
+.custom-alerte.saliendo {
+  animation: slideOut 0.5s ease-in forwards;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}

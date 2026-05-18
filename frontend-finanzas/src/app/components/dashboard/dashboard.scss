@@ -81,7 +81,7 @@ body {
 }
 
 //Ocultar todo lo necesario para que se vea la barra de navegacion bien en moviles
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .btn-logout span {
     display: none; 
   }
@@ -299,6 +299,7 @@ h3 {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  padding-bottom: 15px;
 
 }
 
@@ -364,8 +365,161 @@ h3 {
 
 /* Azul */
 
+//graficos
+
+@keyframes aparecerSuave {
+  from {
+    opacity: 0;
+    transform: translateY(20px); /* Hace que nazca 20 píxeles más abajo */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0); /* Sube hasta su posición original */
+  }
+}
+
+.charts-container {
+  animation: aparecerSuave 1s ease-out;
+  display: flex;
+  justify-content: center; /* Los centra horizontalmente en la pantalla */
+  gap: 110px; /* La separación entre un gráfico y otro */
+  flex-wrap: wrap; /* Super importante: si estás en móvil y no caben, empujará el segundo abajo automáticamente */
+  margin: 20px auto;
+ 
+}
+
+.graficos{
+  width: 250px; 
+  max-width: 100%;
+  
+}
+
+.tituloGrafico {
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+.estado-vacio{
+  animation: aparecerSuave 1s ease-out;
+  text-align: center;
+  padding: 40px;
+}
+
+
+
 
 //Tabla
+
+.headerTransacciones{
+  
+  justify-content: space-between; /* Esto empuja el título a la izquierda y los botones a la derecha */
+  align-items: center;           /* Esto centra todo verticalmente para que nada se vea "cojo" */
+}
+
+.tituloSeccion,
+.accionesTabla{
+
+  @media (min-width: 1024px) {
+    display: flex;
+    align-items: center; /* Alinea el buscador y el botón PDF entre ellos */
+    gap: 35px;           /* Crea un espacio de 15px entre el input y el botón */
+  }
+
+}
+
+ 
+
+.grupoFiltro{
+  gap: 10px;
+  display: flex;
+  
+}
+
+@media (max-width: 768px) {
+ 
+  .grupoFiltro{
+    width: 450px; 
+  }
+}
+
+.botonBorrar{
+  margin-top: 20px;
+  width: 210px;
+  height: 40px;
+  background-color: #ad0909;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  
+  @media (max-width: 768px) {
+    width:400px
+  }
+}
+
+.botonBorrar:hover{
+  background-color: #6d0707;
+}
+//botonborrarmasivo
+/* Cuando el botón tenga el atributo [disabled] */
+.botonBorrar:disabled {
+    background-color: #cccccc !important; /* Gris claro */
+    color: #666666 !important;            /* Texto gris oscuro */
+    cursor: not-allowed;                  /* Cambia el ratón por el símbolo de prohibido */
+    opacity: 0.6;                         /* Lo hace un poco transparente */
+    border-color: #999999 !important;
+    pointer-events: none;                 /* Asegura que no se pueda clickear */
+}
+
+//boton pdf
+.botonPdf {
+  width: 200px;
+  padding: 12px;
+  background-image: linear-gradient(to right, #ad0909, #640a0a);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .botonPdf {
+    width: 40%;
+  }
+}
+
+.botonPdf:hover {
+  filter: brightness(85%);
+  /* Lo oscurece un 15% */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  /* Le da una sombrita abajo */
+}
+
+
+.buscador{
+  width: 500px;
+  /* Hace que rellenen todo el ancho de la caja blanca */
+  padding: 10px;
+  /* Les da grosor para que sea fácil hacer clic */
+  margin: 20px 0;
+  /* Crea espacio arriba y abajo de cada cuadro */
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  /* Suaviza las esquinas de los cuadros */
+  box-shadow: 5px 4px 4px rgba(0, 0, 0, 0.2);
+
+
+}
+
+.cabeceraTabla{
+  cursor:pointer;
+}
+
 .table-section {
   background: white;
   padding: 15px;
@@ -442,13 +596,12 @@ h3 {
   color: #166534;
 }
 
-/* Verde suave */
+
 .bg-gasto {
   background-color: #fee2e2;
   color: #991b1b;
 }
 
-/* Rojo suave */
 
 .texto-ingreso {
   color: #166534;
