@@ -65,8 +65,4 @@ El repositorio está dividido en dos directorios principales:
 * **Validación en Backend:** Todos los endpoints sensibles verifican la firma del JWT antes de ejecutar consultas en la base de datos para asegurar que el usuario solo acceda o modifique sus propios datos.
 * **Rutas Protegidas:** Los Guards de Rutas de Angular previenen que usuarios no autenticados accedan al dashboard y otras rutas privadas.
 
-## 🤝 Contribución
-¡Las contribuciones, problemas y solicitudes de nuevas características son bienvenidos! Siéntete libre de revisar la página de issues si deseas contribuir.
 
-## 📝 Licencia
-Este proyecto es de código abierto y está disponible bajo la [Licencia MIT](LICENSE).
